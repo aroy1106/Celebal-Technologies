@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="calculator">
+        <form action="/calculate" method="POST">
+            <input type="hidden" name="display" id="display">
+            <div class="display" id="displayText">0</div>
+            <div class="buttons">
+                <button type="button" onclick="appendToDisplay('7')">7</button>
+                <button type="button" onclick="appendToDisplay('8')">8</button>
+                <button type="button" onclick="appendToDisplay('9')">9</button>
+                <button type="button" class="ops" onclick="appendToDisplay('/')">/</button>
+                <button type="button" onclick="appendToDisplay('4')">4</button>
+                <button type="button" onclick="appendToDisplay('5')">5</button>
+                <button type="button" onclick="appendToDisplay('6')">6</button>
+                <button type="button" class="ops" onclick="appendToDisplay('*')">*</button>
+                <button type="button" onclick="appendToDisplay('1')">1</button>
+                <button type="button" onclick="appendToDisplay('2')">2</button>
+                <button type="button" onclick="appendToDisplay('3')">3</button>
+                <button type="button" class="ops" onclick="appendToDisplay('-')">-</button>
+                <button type="button" class="ops" onclick="appendToDisplay('+')">+</button>
+                <button type="button" onclick="appendToDisplay('0')">0</button>
+                <button type="button" onclick="appendToDisplay('.')">.</button>
+                <button type="button" class="ops" onclick="clearDisplay()">C</button>
+                <button type="button" class="ops" onclick="appendToDisplay('%')">%</button>
+                <button type="button" class="ops" onclick="appendToDisplay('^')">^</button>
+                <button type="submit" class="equals">=</button>
+            </div>
+        </form>
+        <br>
+        {% if result is defined %}
+        <div class="result">
+            <h2 style="text-align: center;">Result: {{ result }}</h2>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function appendToDisplay(value) {
+            const display = document.getElementById('display');
+            const displayText = document.getElementById('displayText');
+
+            if (display.value === '0') {
+                display.value = value;
+            } else {
+                display.value += value;
+            }
+
+            displayText.textContent = display.value;
+        }
+
+        function clearDisplay() {
+            const display = document.getElementById('display');
+            const displayText = document.getElementById('displayText');
+
+            display.value = '';
+            displayText.textContent = '0';
+        }
+    </script>
+</body>
+
+</html>
