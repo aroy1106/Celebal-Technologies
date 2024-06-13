@@ -10,7 +10,7 @@
 
 <body>
     <div class="calculator">
-        <form action="/calculate" method="POST">
+        <form action="/calculate" method="POST" onsubmit="return calculateResult();">
             <input type="hidden" name="display" id="display">
             <div class="display" id="displayText">0</div>
             <div class="buttons">
@@ -48,12 +48,18 @@
             const display = document.getElementById('display');
             const displayText = document.getElementById('displayText');
 
-            if (display.value === '0') {
-                display.value = value;
-            } else {
-                display.value += value;
-            }
+            if (value === '^') {
 
+                display.value += '**';
+            } else if (value === '%') {
+                display.value += '/100';
+            } else {
+                if (display.value === '0') {
+                    display.value = value;
+                } else {
+                    display.value += value;
+                }
+            }
             displayText.textContent = display.value;
         }
 
@@ -63,6 +69,18 @@
 
             display.value = '';
             displayText.textContent = '0';
+        }
+        function calculateResult() {
+            const display = document.getElementById('display');
+            const displayText = document.getElementById('displayText');
+
+            try {
+                display.value = eval(display.value);
+                displayText.textContent = display.value;
+            } catch (e) {
+                displayText.textContent = 'Error';
+            }
+            return false;
         }
     </script>
 </body>
